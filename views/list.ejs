@@ -5,12 +5,15 @@
         </div>
 
         <div class="box">
-            <% for (var i = 0; i < habits.length; i++) { %>
-            <div class="item">
-                <input type="checkbox">
-                <p> <%=habits[i]%> </p>
-            </div>
-            <% } %>
+
+            <% habits.forEach((habit) => { %>
+                <form action="/delete" method="post">
+                    <div class="item">
+                        <input type="checkbox" name="checkbox" value="<%=habit._id%>" onChange="this.form.submit()">
+                        <p> <%=habit.title%> </p>
+                    </div>
+                </form>
+            <% }) %>
 
             <form class="item" action="/" method="post">
                 <input type="text" name="newHabit" placeholder="New Habit" autocomplete="off" required>
