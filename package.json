@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint \"**/*.js\""
   },
   "author": "Sean Conroy",
   "license": "MIT",
@@ -19,6 +20,8 @@
     "mongoose": "^6.3.4"
   },
   "devDependencies": {
+    "eslint": "^8.16.0",
+    "eslint-config-airbnb-base": "^15.0.0",
     "nodemon": "^2.0.16"
   }
 }
