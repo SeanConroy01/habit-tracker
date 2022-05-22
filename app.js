@@ -2,9 +2,10 @@ require("dotenv").config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const Habit = require('./models/habit')
-const date = require("./date");
+const {getToday, getYesterday} = require("./utils/date");
 
 require('./db/mongoose')
+require('./utils/scheduled-job')
 
 const port = process.env.PORT || 5000;
 
@@ -16,7 +17,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 app.get('/', (req, res) => {
-    const day = date()
+    const day = getToday()
     Habit.find({}, (err, habitList) => {
         if (err) {
             console.log(err);
@@ -44,7 +45,6 @@ app.post('/', (req, res) => {
 app.post('/complete', (req, res) => {
     
     let isComplete = !(req.body.complete === "true");
-    console.log(isComplete)
     let currentStreak = parseInt(req.body.streak);
 
     if (isComplete) {
@@ -53,7 +53,20 @@ app.post('/complete', (req, res) => {
         currentStreak -= 1
     }
 
-    Habit.findByIdAndUpdate(req.body.id, {complete: isComplete, streak: currentStreak}, (err) => {
+    Habit.findByIdAndUpdate(req.body.id, [{
+        $set: {
+            complete: isComplete,
+            completeAt: getToday(),
+            streak: currentStreak,
+            highestStreak: {
+                $cond: {
+                    if: { $gte: [ currentStreak, "$highestStreak" ] }, 
+                    then: currentStreak,
+                    else: "$highestStreak"
+                }
+            }
+        }
+    }], (err) => {
         (err) ? console.log(err) : console.log('Updated habit in database');
     });
     res.redirect('/');

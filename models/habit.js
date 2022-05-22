@@ -10,7 +10,14 @@ const habitSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    completedAt: {
+        type: Date
+    },
     streak: {
+        type: Number,
+        default: 0
+    },
+    highestStreak: {
         type: Number,
         default: 0
     }
