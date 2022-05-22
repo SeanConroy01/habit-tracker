@@ -41,8 +41,26 @@ app.post('/', (req, res) => {
     res.redirect("/");
 });
 
+app.post('/complete', (req, res) => {
+    
+    let isComplete = !(req.body.complete === "true");
+    console.log(isComplete)
+    let currentStreak = parseInt(req.body.streak);
+
+    if (isComplete) {
+        currentStreak += 1
+    } else {
+        currentStreak -= 1
+    }
+
+    Habit.findByIdAndUpdate(req.body.id, {complete: isComplete, streak: currentStreak}, (err) => {
+        (err) ? console.log(err) : console.log('Updated habit in database');
+    });
+    res.redirect('/');
+});
+
 app.post('/delete', (req, res) => {
-    Habit.findByIdAndDelete(req.body.checkbox, (err) => {
+    Habit.findByIdAndDelete(req.body.id, (err) => {
         (err) ? console.log(err) : console.log('Removed habit from database');
     });
     res.redirect('/');
