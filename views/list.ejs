@@ -1,31 +1,43 @@
 <%- include("header") -%>
 
-        <div class="box" id="heading">
-            <h1> <%=date%> </h1>
+    <div class="box" id="heading">
+      <h1> <%=date%> </h1>
+      <a class="edit-icon" href="/edit"><i class="fa-solid fa-pen"></i></a>
+    </div>
+
+    <div class="box">
+      <% habits.forEach((habit) => { %>
+        <div class="item">
+          <form action="/complete" method="post">
+            <div class="item">
+              <input type="text" name="id" value="<%=habit._id%>" hidden="true">
+              <input type="text" name="streak" value="<%=habit.streak%>" hidden="true">
+              <input type="text" name="complete" value="<%=habit.complete%>" hidden="true">
+              <% if (habit.complete) { %>
+              <input type="checkbox" onChange="this.form.submit()" checked>
+              <% } else { %>
+              <input type="checkbox" onChange="this.form.submit()">
+              <% } %>
+              <p> <%=habit.title%> </p>
+            </div>
+          </form>
+          
+          <p class="streak-counter"> <%=habit.streak%> 
+          <% if (habit.streak === 1) { %> day<% } else { %> days<% } %>
+          </p>
+          <% if (isEditing) { %>
+          <form class="delete-form" action="/delete" method="post">
+            <input type="text" name="id" value="<%=habit._id%>" hidden="true">
+            <button class="delete" type="submit"><i class="fa-solid fa-trash"></i></button>
+          </form>
+          <% } %>
         </div>
+      <% }) %>
 
-        <div class="box">
-
-            <% habits.forEach((habit) => { %>
-                <form action="/complete" method="post">
-                    <div class="item">
-                        <input type="text" name="id" value="<%=habit._id%>" hidden="true">
-                        <input type="text" name="streak" value="<%=habit.streak%>" hidden="true">
-                        <input type="text" name="complete" value="<%=habit.complete%>" hidden="true">
-                        <% if (habit.complete) { %>
-                            <input type="checkbox" onChange="this.form.submit()" checked>
-                        <% } else { %>
-                            <input type="checkbox" onChange="this.form.submit()">
-                        <% } %>
-                        <p> <%=habit.title%> - <%=habit.streak%></p>
-                    </div>
-                </form>
-            <% }) %>
-
-            <form class="item" action="/" method="post">
-                <input type="text" name="newHabit" placeholder="New Habit" autocomplete="off" required>
-                <button type="submit" name="button">+</button>
-            </form>
-        </div>
+      <form class="item" action="/" method="post">
+        <input type="text" name="newHabit" placeholder="New Habit" autocomplete="off" required>
+        <button class="add" type="submit" name="button">+</button>
+      </form>
+    </div>
 
 <%- include("footer") -%>

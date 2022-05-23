@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const Habit = require('./models/habit');
+const defaultHabits = require('./utils/defaults');
 const { getToday } = require('./utils/date');
 
 require('./db/mongoose');
@@ -16,21 +17,22 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
+let isEditing = false;
+
 app.get('/', (req, res) => {
-  const day = getToday();
+  const date = getToday();
   Habit.find({}, (err, habitList) => {
     if (err) {
       console.log(err);
     }
 
     if (habitList.length === 0) {
-      const defaultHabits = Habit.createDefault();
       Habit.insertMany(defaultHabits, (err) => {
         (err) ? console.log(err) : console.log('Added default habits to DB');
       });
       habitList = defaultHabits;
     }
-    res.render('list', { date: day, habits: habitList });
+    res.render('list', { date, habits: habitList, isEditing });
   });
 });
 
@@ -75,6 +77,11 @@ app.post('/delete', (req, res) => {
   Habit.findByIdAndDelete(req.body.id, (err) => {
     (err) ? console.log(err) : console.log('Removed habit from database');
   });
+  res.redirect('/');
+});
+
+app.get('/edit', (req, res) => {
+  isEditing = !isEditing;
   res.redirect('/');
 });
 
