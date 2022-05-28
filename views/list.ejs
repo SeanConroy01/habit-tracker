@@ -5,6 +5,15 @@
       <a class="edit-icon" href="/edit"><i class="fa-solid fa-pen"></i></a>
     </div>
 
+    <% if (isEditing) { %>
+      <div class="box">
+        <div class="item">
+          <p>Dark mode</p>
+          <button class="toggle">Toggle</button>
+        </div>
+      </div>
+    <% } %>
+    
     <div class="box">
       <% habits.forEach((habit) => { %>
         <div class="item">

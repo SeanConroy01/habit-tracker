@@ -1,7 +1,28 @@
 :root {
-  --primary-color: #646FD4;
+  --primary-color: #396EB0;
   --secondary-color: #EEEEEE;
-  --third-color: #DBDFFD;
+  --third-color: #FFFFFF;
+}
+
+html.dark-theme {
+  --primary-color: #141E27;
+  --secondary-color: #203239;
+  --third-color: #FFFFFF;
+}
+
+@media (prefers-color-scheme: dark) {
+  
+  html {
+    --primary-color: #141E27;
+    --secondary-color: #203239;
+    --third-color: #FFFFFF;
+  }
+
+  html.light-theme {
+    --primary-color: #396EB0;
+    --secondary-color: #EEEEEE;
+    --third-color: #FFFFFF;
+  }
 }
 
 html {
@@ -12,14 +33,14 @@ html {
 }
 
 h1 {
-  color: #FFF;
+  color: #FFFFFF;
   padding: 10px;
 }
 
 .box {
   max-width: 500px;
   margin: 50px auto;
-  background: #FFF;
+  background: var(--third-color);
   border-radius: 5px;
   box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
   position: relative;
@@ -42,7 +63,7 @@ h1 {
 }
 
 .edit-icon {
-  color: #FFF;
+  color: #FFFFFF;
   position: absolute;
   right:0px;
   top: 0px;
@@ -83,7 +104,7 @@ button.add {
   border-radius: 50%;
   border-color: transparent;
   background-color: var(--primary-color);
-  color: #FFF;
+  color: var(--third-color);
   font-size: 30px;
   padding-bottom: 6px;
   border-width: 0;
@@ -93,12 +114,29 @@ button.add {
 button.delete {
   border-radius: 50%;
   border-color: transparent;
-  color: slategrey;
-  background-color: #FFF;
+  color: var(--primary-color);
+  background-color: var(--third-color);
   font-size: 16px;
   border-width: 0;
   cursor: pointer;
   padding-right: 20px;
+}
+
+button.toggle {
+  color: #FFFFFF;
+  border-radius: 5px;
+  border: 0px;
+  font-size: 16px;
+  font-weight: 200;
+  margin: 15px;
+  padding: 10px;
+  position: absolute;
+  right:0px;
+}
+
+button.toggle:hover {
+  background-color: var(--primary-color);
+  cursor: pointer;
 }
 
 input[type="text"] {
@@ -123,6 +161,6 @@ input[type="text"]:focus {
 }
 
 footer {
-  color: #FFF;
+  color: #FFFFFF;
   text-align: center;
 }
