@@ -1,8 +1,8 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
-const app = require('../app');
-const Habit = require('../models/habit');
-const { getToday } = require('../utils/date');
+const app = require('../src/app');
+const Habit = require('../src/models/habit');
+const { getToday } = require('../src/utils/date');
 
 const habitOneID = new mongoose.Types.ObjectId();
 const habitOne = {
