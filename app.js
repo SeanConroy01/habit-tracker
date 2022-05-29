@@ -3,10 +3,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const Habit = require('./models/habit');
 const defaultHabits = require('./utils/defaults');
+const updateHabits = require('./utils/update-habits');
 const { getToday } = require('./utils/date');
 
 require('./db/mongoose');
 require('./utils/scheduled-job');
+
+updateHabits();
 
 const port = process.env.PORT || 5000;
 
