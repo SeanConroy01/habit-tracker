@@ -11,12 +11,11 @@ require('./utils/scheduled-job');
 
 updateHabits();
 
-const port = process.env.PORT || 5000;
-
 const app = express();
 
 app.set('view engine', 'ejs');
 
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
@@ -41,7 +40,7 @@ app.get('/', (req, res) => {
 
 app.post('/', (req, res) => {
   const newHabit = new Habit({
-    title: req.body.newHabit
+    title: req.body.title
   });
   newHabit.save();
   res.redirect('/');
@@ -88,6 +87,4 @@ app.get('/edit', (req, res) => {
   res.redirect('/');
 });
 
-app.listen(port, () => {
-  console.log(`Server is listening on port ${port}`);
-});
+module.exports = app;

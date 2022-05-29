@@ -10,8 +10,8 @@ const habitSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  completedAt: {
-    type: Date
+  completeAt: {
+    type: String
   },
   streak: {
     type: Number,

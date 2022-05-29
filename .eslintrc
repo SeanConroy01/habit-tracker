@@ -3,10 +3,11 @@
   "env": {
     "node": true,
     "es6": true,
-    "browser": true
+    "browser": true,
+    "jest": true
   },
   "parserOptions": {
-    "ecmaVersion": 6,
+    "ecmaVersion": 8,
     "ecmaFeatures": {
       "impliedStrict": true
     }
