@@ -2,17 +2,15 @@
 
     <div class="box" id="heading">
       <h1> <%=date%> </h1>
-      <a class="edit-icon" href="/edit"><i class="fa-solid fa-pen"></i></a>
+      <button class="toggle-edit edit-icon"><i class="fa-solid fa-pen"></i></button>
     </div>
 
-    <% if (isEditing) { %>
-      <div class="box">
+      <div class="box hide">
         <div class="item">
           <p>Dark mode</p>
-          <button class="toggle">Toggle</button>
+          <button class="toggle-theme">Toggle</button>
         </div>
       </div>
-    <% } %>
     
     <div class="box">
       <% habits.forEach((habit) => { %>
@@ -34,12 +32,10 @@
           <p class="streak-counter"> <%=habit.streak%> 
           <% if (habit.streak === 1) { %> day<% } else { %> days<% } %>
           </p>
-          <% if (isEditing) { %>
-          <form class="delete-form" action="/delete" method="post">
+          <form class="delete-form hide" action="/delete" method="post">
             <input type="text" name="id" value="<%=habit._id%>" hidden="true">
             <button class="delete" type="submit"><i class="fa-solid fa-trash"></i></button>
           </form>
-          <% } %>
         </div>
       <% }) %>
 

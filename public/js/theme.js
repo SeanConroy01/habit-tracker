@@ -1,4 +1,4 @@
-const btn = document.querySelector('.toggle');
+const themeBtn = document.querySelector('.toggle-theme');
 const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
 
 const currentTheme = localStorage.getItem('theme');
@@ -12,7 +12,7 @@ if (currentTheme === 'dark') {
   html.classList.toggle('light-theme');
 }
 
-btn.addEventListener('click', () => {
+themeBtn.addEventListener('click', () => {
   if (prefersDarkScheme.matches) {
     html.classList.toggle('light-theme');
     theme = html.classList.contains('light-theme') ? 'light' : 'dark';

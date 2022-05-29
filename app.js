@@ -19,8 +19,6 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-let isEditing = false;
-
 app.get('/', (req, res) => {
   const date = getToday();
   Habit.find({}, (err, habitList) => {
@@ -34,7 +32,7 @@ app.get('/', (req, res) => {
       });
       habitList = defaultHabits;
     }
-    res.render('list', { date, habits: habitList, isEditing });
+    res.render('list', { date, habits: habitList });
   });
 });
 
@@ -79,11 +77,6 @@ app.post('/delete', (req, res) => {
   Habit.findByIdAndDelete(req.body.id, (err) => {
     (err) ? console.log(err) : console.log('Removed habit from database');
   });
-  res.redirect('/');
-});
-
-app.get('/edit', (req, res) => {
-  isEditing = !isEditing;
   res.redirect('/');
 });
 
