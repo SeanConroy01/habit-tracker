@@ -1,8 +1,8 @@
 const Habit = require('../models/habit');
-const { getYesterday } = require('./date');
+const { getToday, getYesterday } = require('./date');
 
 const updateHabits = () => {
-  const yesterday = getYesterday();
+  const today = getToday();
 
   Habit.updateMany({}, [{
     $project: {
@@ -13,11 +13,25 @@ const updateHabits = () => {
       highestStreak: true,
       streak: {
         $cond: {
-          if: { $and: [{ $eq: ['$complete', true] }, { $eq: ['$completeAt', yesterday] }] },
+          if: { $and: [{ $eq: ['$complete', true] }, { $or: [{ $eq: ['$completeAt', getYesterday()] }, { $eq: ['$completeAt', today] }] }] },
           then: '$streak',
           else: 0
         }
       },
+      complete: {
+        $cond: {
+          if: { $and: [{ $eq: ['$complete', true] }, { $eq: ['$completeAt', today] }] },
+          then: true,
+          else: undefined
+        }
+      },
+      completeAt: {
+        $cond: {
+          if: { $and: [{ $eq: ['$complete', true] }, { $eq: ['$completeAt', today] }] },
+          then: '$completeAt',
+          else: undefined
+        }
+      }
     }
   }], (err) => {
     if (err) {
