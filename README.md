@@ -1,5 +1,7 @@
 # Habit Tracker
 
+![Project Mockup](./project-image.png)
+
 Track your habits, keep your streaks. The objective of this project was to develop a Node.js application that could be run locally on someone's machine, allowing them to maintain a log of their daily habits and monitor how long they have been performing them continuously.
 
 <div>
